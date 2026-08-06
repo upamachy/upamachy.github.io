@@ -1,92 +1,61 @@
-import { Award, MapPin, School, Users } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Section } from "@/components/section"
 import { activities, education } from "@/data/profile"
 
 export function EducationSection() {
   return (
-    <Section id="education" count={education.length}>
-      <ol className="relative space-y-5 border-l border-dashed pl-6 sm:pl-9">
+    <Section id="education">
+      <ol className="space-y-10">
         {education.map((item) => (
-          <li key={item.id} className="relative">
-            <span
-              aria-hidden
-              className="absolute top-6 -left-[1.8125rem] grid size-6 place-items-center rounded-full border-2 border-background bg-rose-500/15 ring-1 ring-rose-500/30 sm:-left-[2.5625rem]"
-            >
-              <span className="size-2 rounded-full bg-rose-500" />
-            </span>
+          <li key={item.id} className="grid gap-x-10 gap-y-3 border-t pt-8 sm:grid-cols-[10.5rem_1fr]">
+            <div className="sm:pt-0.5">
+              <p className="text-sm font-medium">{item.period}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{item.location}</p>
+            </div>
 
-            <Card className="gap-4 rounded-2xl">
-              <CardHeader className="gap-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge
-                    variant="secondary"
-                    className="rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-300"
-                  >
-                    {item.period}
-                  </Badge>
-                  <Badge variant="outline" className="rounded-full">
-                    <Award className="size-3!" />
-                    {item.grade}
-                  </Badge>
-                </div>
-
-                <CardTitle className="mt-1 text-lg font-semibold text-balance">
-                  {item.degree}
-                </CardTitle>
-
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <School className="size-4" />
-                    {item.institution}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="size-4" />
-                    {item.location}
-                  </span>
-                </div>
-              </CardHeader>
+            <div className="min-w-0">
+              <h3 className="text-lg font-semibold tracking-tight text-balance">{item.degree}</h3>
+              <p className="mt-1 text-[0.9375rem] font-medium text-blue-700 dark:text-blue-400">
+                {item.institution}
+              </p>
+              <p className="mt-2.5 inline-block rounded-md border bg-background px-2 py-1 text-xs font-medium">
+                {item.grade}
+              </p>
 
               {item.notes.length > 0 ? (
-                <CardContent>
-                  <ul className="space-y-2">
-                    {item.notes.map((note) => (
-                      <li key={note} className="flex gap-2.5 text-sm leading-relaxed">
-                        <span
-                          aria-hidden
-                          className="mt-1.5 size-1.5 shrink-0 rounded-full bg-rose-500/70"
-                        />
-                        <span className="text-muted-foreground">{note}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed marker:text-muted-foreground/50">
+                  {item.notes.map((note) => (
+                    <li key={note} className="pl-1 text-muted-foreground">
+                      {note}
+                    </li>
+                  ))}
+                </ul>
               ) : null}
-            </Card>
+            </div>
           </li>
         ))}
       </ol>
 
-      <div className="mt-10 sm:mt-12">
-        <h3 className="flex items-center gap-2 text-base font-semibold">
-          <Users className="size-4.5 text-rose-700 dark:text-rose-300" />
+      <div className="mt-14">
+        <h3 className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
           Co-curricular activities
         </h3>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <dl className="mt-5 space-y-6">
           {activities.map((activity) => (
-            <Card key={activity.id} className="gap-2 rounded-2xl">
-              <CardHeader className="gap-1">
-                <CardTitle className="text-base font-semibold">{activity.role}</CardTitle>
-                <p className="text-sm font-medium text-muted-foreground">{activity.organization}</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{activity.detail}</p>
-              </CardContent>
-            </Card>
+            <div
+              key={activity.id}
+              className="grid gap-x-10 gap-y-1 border-t pt-5 sm:grid-cols-[10.5rem_1fr]"
+            >
+              <dt className="text-sm font-medium">{activity.role}</dt>
+              <dd className="min-w-0">
+                <p className="text-[0.9375rem] font-medium text-blue-700 dark:text-blue-400">
+                  {activity.organization}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">{activity.detail}</p>
+              </dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </div>
     </Section>
   )

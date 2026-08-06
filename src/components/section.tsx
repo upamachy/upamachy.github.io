@@ -4,48 +4,42 @@ import { cn } from "@/lib/utils"
 type SectionProps = {
   id: SectionId
   tinted?: boolean
-  count?: number
   children: React.ReactNode
 }
 
-export function Section({ id, tinted, count, children }: SectionProps) {
+export function Section({ id, tinted, children }: SectionProps) {
   const meta = sectionMap[id]
 
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("scroll-mt-14 border-b py-14 sm:py-20", tinted && "bg-muted/40")}
+      className={cn("scroll-mt-16 border-b py-14 sm:py-20", tinted && "bg-muted/40")}
     >
-      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
-        <header className="mb-8 sm:mb-12">
-          <div className="flex items-center gap-2.5">
-            <span
-              className={cn(
-                "grid size-9 shrink-0 place-items-center rounded-xl ring-1",
-                meta.accentTile,
-                meta.accentRing
-              )}
-            >
-              <meta.icon className="size-4.5" />
+      <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
+        <header className="mb-9 max-w-3xl sm:mb-12">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
+              {meta.index}
             </span>
-            <span
-              className={cn("text-xs font-semibold tracking-[0.16em] uppercase", meta.accentText)}
-            >
-              {meta.eyebrow}
-              {count ? ` · ${count}` : ""}
+            <span aria-hidden className="h-px w-8 bg-blue-700/40 dark:bg-blue-400/40" />
+            <span className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+              {meta.label}
             </span>
           </div>
+
           <h2
             id={`${id}-title`}
-            className="mt-4 text-2xl font-bold tracking-tight text-balance sm:text-3xl"
+            className="mt-4 text-2xl font-semibold tracking-tight text-balance sm:text-3xl"
           >
             {meta.title}
           </h2>
-          <p className="mt-2 max-w-2xl text-[0.9375rem] text-muted-foreground sm:text-base">
+
+          <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground sm:text-base">
             {meta.description}
           </p>
         </header>
+
         {children}
       </div>
     </section>

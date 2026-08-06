@@ -1,72 +1,51 @@
-import { Building2, MapPin } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Section } from "@/components/section"
 import { experience } from "@/data/profile"
 
 export function ExperienceSection() {
   return (
-    <Section id="experience" tinted count={experience.length}>
-      <ol className="relative space-y-5 border-l border-dashed pl-6 sm:space-y-6 sm:pl-9">
+    <Section id="experience" tinted>
+      <ol className="space-y-10 sm:space-y-12">
         {experience.map((job) => (
-          <li key={job.id} className="relative">
-            <span
-              aria-hidden
-              className="absolute top-6 -left-[1.8125rem] grid size-6 place-items-center rounded-full border-2 border-background bg-violet-500/15 ring-1 ring-violet-500/30 sm:-left-[2.5625rem]"
-            >
-              <span className="size-2 rounded-full bg-violet-500" />
-            </span>
+          <li
+            key={job.id}
+            className="grid gap-x-10 gap-y-4 border-t pt-8 sm:grid-cols-[10.5rem_1fr]"
+          >
+            <div className="sm:pt-0.5">
+              <p className="text-sm font-medium">{job.period}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{job.location}</p>
+              {job.current ? (
+                <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+                  <span aria-hidden className="size-1.5 rounded-full bg-emerald-600" />
+                  Current role
+                </p>
+              ) : null}
+            </div>
 
-            <Card className="gap-4 rounded-2xl">
-              <CardHeader className="gap-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge
-                    variant="secondary"
-                    className="rounded-full bg-violet-500/10 text-violet-700 dark:text-violet-300"
+            <div className="min-w-0">
+              <h3 className="text-lg font-semibold tracking-tight sm:text-xl">{job.role}</h3>
+              <p className="mt-1 text-[0.9375rem] font-medium text-blue-700 dark:text-blue-400">
+                {job.company}
+              </p>
+
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-[0.9375rem] leading-relaxed marker:text-muted-foreground/50">
+                {job.highlights.map((highlight) => (
+                  <li key={highlight} className="pl-1 text-foreground/90">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+
+              <ul className="mt-5 flex flex-wrap gap-1.5">
+                {job.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-md border bg-background px-2 py-1 text-xs text-muted-foreground"
                   >
-                    {job.period}
-                  </Badge>
-                  {job.current ? (
-                    <Badge variant="outline" className="rounded-full text-muted-foreground">
-                      Current
-                    </Badge>
-                  ) : null}
-                </div>
-                <CardTitle className="mt-1 text-lg font-semibold sm:text-xl">{job.role}</CardTitle>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <Building2 className="size-4" />
-                    {job.company}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="size-4" />
-                    {job.location}
-                  </span>
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                <ul className="space-y-2">
-                  {job.highlights.map((highlight) => (
-                    <li key={highlight} className="flex gap-2.5 text-[0.9375rem] leading-relaxed">
-                      <span
-                        aria-hidden
-                        className="mt-2 size-1.5 shrink-0 rounded-full bg-violet-500/70"
-                      />
-                      <span className="text-foreground/90">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-1.5">
-                  {job.tags.map((tag) => (
-                    <Badge key={tag} variant="outline" className="rounded-full text-muted-foreground">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </li>
         ))}
       </ol>

@@ -3,11 +3,11 @@ export const profile = {
   name: "Upama Chowdhury",
   handle: "upamachy",
   role: ".NET Backend Engineer",
-  headline: "I build backends that hold up in production.",
+  headline: "Available for backend and full-stack engineering roles.",
   tagline:
-    "Three years shipping ASP.NET Core services across healthcare, billing and program-monitoring platforms — now focused on event-driven, serverless systems on .NET 8 and AWS.",
+    "Three years of production experience building ASP.NET Core services across healthcare, billing and program-monitoring platforms, with a current focus on event-driven, serverless systems on .NET 8 and AWS.",
   location: "Dhaka, Bangladesh",
-  availability: "Open to backend and full-stack roles",
+  availability: "Available for new opportunities",
   avatar: "upama.jpg",
   cv: "Upama-Chowdhury-CV.pdf",
   email: "upamachy360@gmail.com",
@@ -17,15 +17,15 @@ export const profile = {
 }
 
 export const stats = [
-  { value: "3+", label: "Years shipping" },
+  { value: "3+", label: "Years of experience" },
   { value: "35k+", label: "Users served" },
   { value: "5", label: "Products delivered" },
-  { value: "3.67", label: "CGPA / 4.00" },
+  { value: "3.67", label: "CGPA out of 4.00" },
 ]
 
 export const about = [
-  "I am a .NET backend engineer in Dhaka with three years of production experience across healthcare, billing and program-monitoring platforms. Most of my work is service design: modelling the domain, getting the data right, and making sure the thing keeps running when the inputs are messy.",
-  "I like the unglamorous parts — the claim that silently failed, the export that broke on one bad row, the sync that needed to become a pipeline. Backend work that people downstream actually feel.",
+  ".NET backend engineer based in Dhaka, Bangladesh, with three years of production experience across healthcare, billing and program-monitoring platforms. My work centres on service design: modelling the domain, enforcing data integrity, and keeping systems reliable when upstream inputs are inconsistent.",
+  "Recent work has focused on migrating synchronous integrations to event-driven pipelines on AWS, implementing standards-based claim exports, and resolving production defects with direct financial impact for clients.",
 ]
 
 export type Experience = {
@@ -48,10 +48,10 @@ export const experience: Experience[] = [
     period: "May 2025 — Present",
     current: true,
     highlights: [
-      "Core contributor to a multi-service .NET 8 and AWS Lambda platform on MongoDB serving 3–4k active users.",
-      "Root-caused a production defect that was silently rejecting insurance claims, unblocking billing for affected agencies.",
-      "Rebuilt HHAeXchange visit syncing into an async, event-driven pipeline on AWS Step Functions.",
-      "Shipped an EDI 837P claim export plus automated invoice generation and PDF finance exports, replacing manual spreadsheet billing.",
+      "Core contributor to a multi-service .NET 8 and AWS Lambda platform on MongoDB serving 3,000–4,000 active users.",
+      "Diagnosed and resolved a production defect that was silently rejecting insurance claims, restoring billing for affected agencies.",
+      "Rebuilt HHAeXchange visit synchronization as an asynchronous, event-driven pipeline on AWS Step Functions.",
+      "Delivered an EDI 837P (ANSI X12) claim export, plus automated invoice generation and PDF finance exports, replacing manual spreadsheet billing.",
     ],
     tags: [".NET 8", "AWS Lambda", "Step Functions", "MongoDB", "EDI 837P"],
   },
@@ -62,10 +62,10 @@ export const experience: Experience[] = [
     location: "Dhaka, Bangladesh",
     period: "Nov 2023 — Apr 2025",
     highlights: [
-      "Independently built the SoowGood admin module end-to-end in ASP.NET Core and Angular, separate from the patient-facing site.",
+      "Built the SoowGood administrative module end to end in ASP.NET Core and Angular, as an application separate from the patient-facing site.",
       "Delivered authentication with ASP.NET Identity, appointment scheduling and video consultation on EF Core and SQL Server.",
-      "Led the team through final delivery on a platform serving 20k+ registered users.",
-      "Sole developer modernizing FirstStudy, an inherited legacy system used by 10–12 institutes and 3,000+ students.",
+      "Led the team through final delivery of a platform serving 20,000+ registered users.",
+      "Sole developer responsible for modernizing FirstStudy, an inherited legacy system used by 10–12 institutes and 3,000+ students.",
     ],
     tags: ["ASP.NET Core", "Angular", "ASP.NET Identity", "EF Core", "SQL Server"],
   },
@@ -76,9 +76,9 @@ export const experience: Experience[] = [
     location: "Dhaka, Bangladesh",
     period: "Apr 2023 — Jul 2023",
     highlights: [
-      "Built a demo ASP.NET Web API covering frontend, backend and database.",
-      "Added features to a live ASP.NET MVC and AngularJS product, front and back end.",
-      "Worked with stored procedures and T-SQL on MS SQL Server, and wrote test cases for new work.",
+      "Built a demonstration ASP.NET Web API covering frontend, backend and database layers.",
+      "Implemented features across the frontend and backend of a live ASP.NET MVC and AngularJS product.",
+      "Worked with stored procedures and T-SQL on MS SQL Server, and wrote test cases for new functionality.",
     ],
     tags: ["ASP.NET Web API", "AngularJS", "React", "T-SQL"],
   },
@@ -105,10 +105,10 @@ export const projects: Project[] = [
     org: "Kaz Software",
     period: "2025 — Present",
     blurb:
-      "A multi-service .NET 8 platform on AWS that records home-care visits and turns them into payable insurance claims.",
+      "Multi-service .NET 8 platform on AWS that records home-care visits and converts them into payable insurance claims.",
     highlights: [
-      "Event-driven visit sync on Step Functions, replacing a brittle synchronous integration.",
-      "EDI 837P (ANSI X12) claim export with diagnosis coding and unit/charge calculation.",
+      "Event-driven visit synchronization on Step Functions, replacing an unreliable synchronous integration.",
+      "EDI 837P (ANSI X12) claim export with diagnosis coding and unit and charge calculation.",
       "Automated invoicing and PDF finance exports for agency billing teams.",
     ],
     tags: [".NET 8", "AWS Lambda", "MongoDB", "Step Functions", "EventBridge"],
@@ -120,10 +120,10 @@ export const projects: Project[] = [
     org: "Kaz Software",
     period: "2025",
     blurb:
-      "A .NET 6 Clean Architecture API serving 10k+ users across field reporting and beneficiary management.",
+      ".NET 6 Clean Architecture API serving 10,000+ users across field reporting and beneficiary management.",
     highlights: [
-      "Fixed a data-integrity bug in completion reporting: correct report scoping and duplicate-submission blocking.",
-      "Hardened the beneficiary Excel export to skip malformed records instead of failing the whole file.",
+      "Resolved a data-integrity defect in completion reporting through correct report scoping and duplicate-submission control.",
+      "Hardened the beneficiary Excel export to skip malformed records rather than fail the entire file.",
       "Added permission-based JWT access control to sensitive reporting endpoints.",
     ],
     tags: [".NET 6", "Clean Architecture", "JWT", "SQL Server"],
@@ -135,10 +135,10 @@ export const projects: Project[] = [
     org: "Coppanet Ltd",
     period: "2023 — 2025",
     blurb:
-      "A telemedicine product serving 20k+ registered users, where I owned the entire admin application.",
+      "Telemedicine platform serving 20,000+ registered users. Sole owner of the administrative application.",
     highlights: [
-      "Built the admin module end-to-end in ASP.NET Core and Angular as a standalone app.",
-      "Authentication via ASP.NET Identity, appointment scheduling and video consultation on EF Core.",
+      "Built the administrative module end to end in ASP.NET Core and Angular as a standalone application.",
+      "Implemented authentication via ASP.NET Identity, appointment scheduling and video consultation on EF Core.",
       "Led the team through final delivery and release.",
     ],
     tags: ["ASP.NET Core", "Angular", "Angular Material", "EF Core", "SQL Server"],
@@ -150,11 +150,11 @@ export const projects: Project[] = [
     org: "Coppanet Ltd",
     period: "2024",
     blurb:
-      "An inherited legacy system for 10–12 institutes and 3,000+ students that had to keep running while being rebuilt.",
+      "Inherited legacy system serving 10–12 institutes and 3,000+ students, modernized while remaining in production.",
     highlights: [
       "Refactored unstable modules incrementally, without downtime for live institutes.",
       "Optimized EF Core and LINQ queries on the heaviest reporting paths.",
-      "Enabled admins to manage teachers, students and payments from one place.",
+      "Consolidated teacher, student and payment management into a single administrative interface.",
     ],
     tags: ["ASP.NET Core", "EF Core", "LINQ", "Refactoring"],
   },
@@ -165,10 +165,10 @@ export const projects: Project[] = [
     org: "East Delta University",
     period: "2023",
     blurb:
-      "Machine learning research identifying the specific genes responsible for Type-2 diabetes, with explainable output.",
+      "Machine learning research identifying genes associated with Type-2 diabetes, with interpretable model output.",
     highlights: [
-      "Used LIME to make model predictions interpretable rather than black-box.",
-      "Focused on pinpointing causative genes to enable targeted, individualized treatment.",
+      "Applied LIME to make model predictions interpretable rather than opaque.",
+      "Identified causative genes to support targeted, individualized treatment.",
     ],
     tags: ["Python", "Machine Learning", "LIME", "Explainable AI"],
   },
@@ -226,19 +226,19 @@ export const activities: Activity[] = [
     id: "edu-computer-club",
     role: "Coordinator",
     organization: "EDU Computer Club",
-    detail: "Coordinated club activities and events at East Delta University.",
+    detail: "Coordinated club activities and technical events at East Delta University.",
   },
 ]
 
 export const skillGroups: { label: string; blurb: string; items: string[] }[] = [
   {
     label: "Languages",
-    blurb: "What I write day to day",
+    blurb: "Primary programming languages",
     items: ["C#", "SQL", "TypeScript", "JavaScript", "Python"],
   },
   {
     label: "Backend",
-    blurb: "Where most of my work lives",
+    blurb: "Frameworks and libraries",
     items: [
       "ASP.NET Core",
       ".NET 8",
@@ -254,7 +254,7 @@ export const skillGroups: { label: string; blurb: string; items: string[] }[] = 
   },
   {
     label: "Cloud & DevOps",
-    blurb: "Serverless on AWS",
+    blurb: "Platforms and tooling",
     items: [
       "AWS Lambda",
       "API Gateway",
@@ -269,17 +269,17 @@ export const skillGroups: { label: string; blurb: string; items: string[] }[] = 
   },
   {
     label: "Databases",
-    blurb: "Relational and document",
+    blurb: "Data stores and query languages",
     items: ["SQL Server", "MongoDB", "T-SQL", "Stored procedures"],
   },
   {
     label: "Frontend",
-    blurb: "Enough to own a feature end to end",
+    blurb: "Client-side frameworks",
     items: ["Angular", "Angular Material", "React", "Bootstrap", "HTML", "CSS"],
   },
   {
     label: "Practices",
-    blurb: "How I build",
+    blurb: "Architecture and methodology",
     items: [
       "Clean Architecture",
       "Microservices",
@@ -324,7 +324,7 @@ export const certifications: Certification[] = [
     issuer: "Anthropic",
     date: "Oct 2025",
     credential: "tzm34p6gd8c5",
-    detail: "Working effectively and responsibly with AI systems.",
+    detail: "Framework for working effectively and responsibly with AI systems.",
   },
   {
     id: "cert-pencilbox",
@@ -332,7 +332,7 @@ export const certifications: Certification[] = [
     issuer: "PencilBox Training Institute",
     date: "Mar 2022",
     credential: "ASPMVC/008/012",
-    detail: "96-hour program, Oct–Dec 2021. Awarded with the Excellence Award.",
+    detail: "96-hour training programme completed October to December 2021. Awarded the Excellence Award.",
     href: "cert-pencilbox.jpg",
     hrefLabel: "View certificate",
   },
@@ -342,6 +342,6 @@ export const certifications: Certification[] = [
     issuer: "Dev Skill",
     date: "Jun 2021",
     credential: null,
-    detail: "C# fundamentals and object-oriented programming.",
+    detail: "Professional training in C# fundamentals and object-oriented programming.",
   },
 ]

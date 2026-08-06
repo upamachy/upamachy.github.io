@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Download, Menu, Moon, Sun, Terminal } from "lucide-react"
+import { Download, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -11,63 +11,48 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { GithubIcon, LinkedinIcon } from "@/components/brand-icons"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { sectionList } from "@/components/nav"
 import { profile } from "@/data/profile"
 import { asset } from "@/lib/asset"
-import { useTheme } from "@/lib/theme-context"
 import { cn } from "@/lib/utils"
 
 export function SiteHeader({ active }: { active: string | null }) {
   const [open, setOpen] = useState(false)
-  const { toggle } = useTheme()
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-lg">
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-3 px-4 sm:px-6">
-        <a
-          href="#top"
-          aria-label={`${profile.siteName}, back to top`}
-          className="flex shrink-0 items-center gap-2.5 rounded-lg"
-        >
-          <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <Terminal className="size-4" />
+    <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-5 sm:px-8">
+        <a href="#top" className="flex min-h-10 min-w-0 shrink-0 flex-col justify-center">
+          <span className="block truncate text-sm font-semibold tracking-tight">
+            {profile.name}
           </span>
-          <span className="truncate text-sm font-semibold">{profile.siteName}</span>
+          <span className="hidden truncate text-xs text-muted-foreground sm:block">
+            {profile.role}
+          </span>
         </a>
 
-        <nav aria-label="Sections" className="mx-auto hidden items-center gap-0.5 lg:flex">
+        <nav aria-label="Sections" className="mx-auto hidden items-center lg:flex">
           {sectionList.map((section) => (
-            <Button
+            <a
               key={section.id}
-              asChild
-              variant="ghost"
-              size="sm"
+              href={`#${section.id}`}
+              aria-current={active === section.id ? "true" : undefined}
               className={cn(
-                "h-8 rounded-full px-3 text-[0.8125rem] font-medium text-muted-foreground",
-                active === section.id && "bg-muted text-foreground"
+                "relative px-3 py-5 text-sm text-muted-foreground transition-colors hover:text-foreground",
+                active === section.id &&
+                  "text-foreground after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-blue-700 dark:after:bg-blue-400"
               )}
             >
-              <a href={`#${section.id}`} aria-current={active === section.id ? "true" : undefined}>
-                {section.label}
-              </a>
-            </Button>
+              {section.label}
+            </a>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-1 lg:ml-0">
-          <Button
-            variant="ghost"
-            size="icon-lg"
-            className="rounded-full"
-            onClick={toggle}
-            title="Toggle theme"
-          >
-            <Sun className="hidden size-4.5! dark:block" />
-            <Moon className="size-4.5! dark:hidden" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          <ThemeToggle />
 
-          <Button asChild size="sm" className="hidden h-9 rounded-full px-4 sm:inline-flex">
+          <Button asChild size="sm" className="hidden h-9 px-4 sm:inline-flex">
             <a href={asset(profile.cv)} download>
               <Download className="size-4!" />
               Résumé
@@ -76,63 +61,55 @@ export function SiteHeader({ active }: { active: string | null }) {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon-lg" className="rounded-full lg:hidden">
+              <Button variant="outline" size="icon-lg" className="lg:hidden">
                 <Menu className="size-4.5!" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
+
             <SheetContent side="right" className="w-full gap-0 p-0 sm:max-w-sm">
-              <SheetTitle className="border-b px-5 py-4 text-base">{profile.siteName}</SheetTitle>
+              <SheetTitle className="border-b px-5 py-4 text-base">{profile.name}</SheetTitle>
               <SheetDescription className="sr-only">
                 Jump to a section of the portfolio
               </SheetDescription>
 
-              <nav aria-label="Sections" className="flex flex-col gap-1 p-3">
+              <nav aria-label="Sections" className="flex flex-col p-2">
                 {sectionList.map((section) => (
                   <SheetClose asChild key={section.id}>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      size="lg"
+                    <a
+                      href={`#${section.id}`}
                       className={cn(
-                        "h-12 justify-start gap-3 rounded-xl px-3 text-base font-normal",
-                        active === section.id && "bg-muted font-semibold"
+                        "flex items-center gap-3 rounded-md px-3 py-3 text-[0.9375rem] transition-colors hover:bg-muted",
+                        active === section.id && "bg-muted font-medium"
                       )}
                     >
-                      <a href={`#${section.id}`}>
-                        <span
-                          className={cn(
-                            "grid size-8 shrink-0 place-items-center rounded-lg ring-1",
-                            section.accentTile,
-                            section.accentRing
-                          )}
-                        >
-                          <section.icon className="size-4!" />
-                        </span>
-                        {section.label}
-                      </a>
-                    </Button>
+                      <span className="font-mono text-xs text-blue-700 dark:text-blue-400">
+                        {section.index}
+                      </span>
+                      <section.icon className="size-4 text-muted-foreground" />
+                      {section.label}
+                    </a>
                   </SheetClose>
                 ))}
               </nav>
 
               <Separator />
 
-              <div className="flex flex-col gap-2 p-3">
-                <Button asChild size="lg" className="h-11 rounded-xl text-base">
+              <div className="flex flex-col gap-2 p-4">
+                <Button asChild size="lg" className="h-11 text-base">
                   <a href={asset(profile.cv)} download>
                     <Download className="size-4.5!" />
                     Download résumé
                   </a>
                 </Button>
                 <div className="flex gap-2">
-                  <Button asChild variant="outline" size="lg" className="h-11 flex-1 rounded-xl">
+                  <Button asChild variant="outline" size="lg" className="h-11 flex-1">
                     <a href={profile.github} target="_blank" rel="noreferrer noopener">
                       <GithubIcon className="size-4.5" />
                       GitHub
                     </a>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="h-11 flex-1 rounded-xl">
+                  <Button asChild variant="outline" size="lg" className="h-11 flex-1">
                     <a href={profile.linkedin} target="_blank" rel="noreferrer noopener">
                       <LinkedinIcon className="size-4.5" />
                       LinkedIn

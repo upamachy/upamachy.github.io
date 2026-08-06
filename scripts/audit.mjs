@@ -175,8 +175,15 @@ for (const viewport of viewports) {
   await page.evaluate(() => window.scrollTo(0, 0))
   await page.waitForTimeout(300)
 
-  const educationText = await page.locator("section#education").innerText()
-  for (const expected of ["Higher Secondary", "Secondary School Certificate", "4.17", "5.00", "Co-curricular", "EDU Computer Club"]) {
+  const educationText = (await page.locator("section#education").innerText()).toLowerCase()
+  for (const expected of [
+    "higher secondary",
+    "secondary school certificate",
+    "4.17",
+    "5.00",
+    "co-curricular",
+    "edu computer club",
+  ]) {
     if (!educationText.includes(expected)) {
       fail(viewport.name, `education section missing "${expected}"`)
     }
