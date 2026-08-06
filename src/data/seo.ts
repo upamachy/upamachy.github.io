@@ -1,4 +1,4 @@
-import { certifications, profile, skillGroups } from "@/data/profile"
+import { certifications, education, profile, projects, skillGroups } from "@/data/profile"
 
 export const site = {
   url: "https://upamachy.github.io",
@@ -9,26 +9,6 @@ export const site = {
   locale: "en_US",
   themeColor: "#0a0a0a",
 }
-
-export const keywords = [
-  "Upama Chowdhury",
-  "Upama's Coding House",
-  "upamachy",
-  ".NET backend engineer",
-  "ASP.NET Core developer",
-  ".NET 8 developer",
-  "C# developer Bangladesh",
-  "software engineer Dhaka",
-  "AWS Lambda .NET",
-  "EF Core",
-  "MongoDB",
-  "SQL Server",
-  "Angular developer",
-  "EDI 837P",
-  "Clean Architecture",
-  "serverless .NET",
-  "backend portfolio",
-]
 
 const knowsAbout = skillGroups.flatMap((group) => group.items)
 
@@ -52,15 +32,15 @@ export function structuredData() {
       addressCountry: "BD",
     },
     sameAs: [profile.github, profile.linkedin],
-    alumniOf: {
-      "@type": "CollegeOrUniversity",
-      name: "East Delta University",
+    alumniOf: education.map((item) => ({
+      "@type": item.id === "bsc" ? "CollegeOrUniversity" : "EducationalOrganization",
+      name: item.institution,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Chattogram",
+        addressLocality: item.location.split(",")[0],
         addressCountry: "BD",
       },
-    },
+    })),
     worksFor: {
       "@type": "Organization",
       name: "Kaz Software",
@@ -70,14 +50,28 @@ export function structuredData() {
         addressCountry: "BD",
       },
     },
-    hasCredential: certifications.map((certification) => ({
-      "@type": "EducationalOccupationalCredential",
-      name: certification.title,
-      credentialCategory: "certificate",
-      dateCreated: certification.date,
-      recognizedBy: { "@type": "Organization", name: certification.issuer },
-      ...(certification.credential ? { identifier: certification.credential } : {}),
-    })),
+    hasCredential: [
+      ...education.map((item) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: item.degree,
+        credentialCategory: "degree",
+        educationalLevel: item.id === "bsc" ? "Bachelor" : "Secondary",
+        recognizedBy: { "@type": "EducationalOrganization", name: item.institution },
+      })),
+      ...certifications.map((certification) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: certification.title,
+        credentialCategory: "certificate",
+        dateCreated: certification.date,
+        recognizedBy: { "@type": "Organization", name: certification.issuer },
+        ...(certification.credential ? { identifier: certification.credential } : {}),
+      })),
+    ],
+    memberOf: {
+      "@type": "Organization",
+      name: "EDU Computer Club",
+      description: "Coordinator",
+    },
   }
 
   const website = {
@@ -101,16 +95,31 @@ export function structuredData() {
     mainEntity: { "@id": `${site.url}/#person` },
     primaryImageOfPage: `${site.url}/og.png`,
     inLanguage: "en",
+    hasPart: projects.map((project) => ({
+      "@type": "CreativeWork",
+      name: `${project.name} — ${project.kind}`,
+      description: project.blurb,
+      author: { "@id": `${site.url}/#person` },
+      keywords: project.tags.join(", "),
+    })),
   }
 
   const breadcrumbs = {
     "@type": "BreadcrumbList",
     "@id": `${site.url}/#breadcrumbs`,
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+      { "@type": "ListItem", position: 1, name: "About", item: `${site.url}/#about` },
       { "@type": "ListItem", position: 2, name: "Experience", item: `${site.url}/#experience` },
       { "@type": "ListItem", position: 3, name: "Projects", item: `${site.url}/#projects` },
-      { "@type": "ListItem", position: 4, name: "Certifications", item: `${site.url}/#certifications` },
+      { "@type": "ListItem", position: 4, name: "Skills", item: `${site.url}/#skills` },
+      { "@type": "ListItem", position: 5, name: "Education", item: `${site.url}/#education` },
+      {
+        "@type": "ListItem",
+        position: 6,
+        name: "Certifications",
+        item: `${site.url}/#certifications`,
+      },
+      { "@type": "ListItem", position: 7, name: "Contact", item: `${site.url}/#contact` },
     ],
   }
 

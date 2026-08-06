@@ -40,5 +40,14 @@ Edit those two files and rebuild — nothing else hardcodes content.
 
 `scripts/audit.mjs` boots Chromium against a preview server and checks, per viewport:
 horizontal overflow, console errors, failed requests, image loading, 24px tap targets,
-tab switching, mobile sheet open/close, theme toggle, keyboard skip link, and axe-core
-WCAG 2.1 AA. It then verifies meta tags, JSON-LD graph types, and that every public asset returns 200.
+every section anchor landing clear of the sticky header, scroll-spy accuracy, education
+content completeness, mobile sheet open/close, theme toggle, keyboard skip link, and
+axe-core WCAG 2.1 AA. It then verifies meta tags, JSON-LD graph types, and that every
+public asset returns 200.
+
+## Layout
+
+One page, seven anchored sections — About, Experience, Projects, Skills, Education,
+Certifications, Contact. Each has its own accent colour, icon tile and layout (timelines
+for Experience and Education, card grids for Projects, Skills and Certifications) so the
+sections stay visually distinct. The sticky header tracks the active section as you scroll.

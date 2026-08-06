@@ -90,6 +90,7 @@ for (const viewport of viewports) {
 
   const h1 = await page.locator("h1").first().textContent()
   if (!h1?.includes("Upama")) fail(viewport.name, `unexpected h1: ${h1}`)
+  if ((await page.locator("h1").count()) !== 1) fail(viewport.name, "expected exactly one h1")
 
   const avatarLoaded = await page.evaluate(() => {
     const images = Array.from(document.querySelectorAll("img"))
@@ -134,17 +135,68 @@ for (const viewport of viewports) {
   await page.keyboard.press("Enter")
   await page.waitForTimeout(200)
 
-  const tabs = ["Experience", "Projects", "Education", "Certificates", "Home"]
-  for (const tab of tabs) {
-    const trigger = page.getByRole("tab", { name: tab, exact: true })
-    if ((await trigger.count()) === 0) {
-      fail(viewport.name, `tab "${tab}" not found`)
+  const SECTIONS = [
+    "about",
+    "experience",
+    "projects",
+    "skills",
+    "education",
+    "certifications",
+    "contact",
+  ]
+
+  for (const id of SECTIONS) {
+    const section = page.locator(`section#${id}`)
+    if ((await section.count()) !== 1) {
+      fail(viewport.name, `section #${id} missing`)
       continue
     }
-    await trigger.first().click()
-    await page.waitForTimeout(220)
-    const articles = await page.locator("article").count()
-    if (articles === 0) fail(viewport.name, `tab "${tab}" rendered no cards`)
+    const heading = await section.locator("h2").first().textContent()
+    if (!heading?.trim()) fail(viewport.name, `section #${id} has no h2`)
+
+    await page.evaluate((target) => {
+      document.getElementById(target)?.scrollIntoView()
+    }, id)
+    await page.waitForTimeout(200)
+
+    const covered = await page.evaluate((target) => {
+      const element = document.getElementById(target)
+      if (!element) return "missing"
+      const heading = element.querySelector("h2")
+      if (!heading) return "no-heading"
+      const rect = heading.getBoundingClientRect()
+      const header = document.querySelector("header.sticky")
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0
+      return rect.top >= headerBottom - 1 ? "ok" : `covered by header (${Math.round(rect.top)} < ${Math.round(headerBottom)})`
+    }, id)
+    if (covered !== "ok") fail(viewport.name, `#${id} anchor: ${covered}`)
+  }
+
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.waitForTimeout(300)
+
+  const educationText = await page.locator("section#education").innerText()
+  for (const expected of ["Higher Secondary", "Secondary School Certificate", "4.17", "5.00", "Co-curricular", "EDU Computer Club"]) {
+    if (!educationText.includes(expected)) {
+      fail(viewport.name, `education section missing "${expected}"`)
+    }
+  }
+
+  const activeNav = await page.evaluate(() => {
+    const element = document.getElementById("experience")
+    element?.scrollIntoView()
+    return true
+  })
+  if (activeNav) {
+    await page.waitForTimeout(400)
+    if (viewport.width >= 1024) {
+      const current = await page.locator('header nav a[aria-current="true"]').first().textContent()
+      if (current?.trim() !== "Experience") {
+        fail(viewport.name, `scroll spy showed "${current?.trim()}" instead of Experience`)
+      }
+    }
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await page.waitForTimeout(300)
   }
 
   if (viewport.width < 1024) {
@@ -164,8 +216,8 @@ for (const viewport of viewports) {
       }
     }
   } else {
-    const sideNav = page.getByRole("navigation", { name: "Sections" })
-    if (!(await sideNav.first().isVisible())) fail(viewport.name, "desktop sidebar hidden")
+    const headerNav = page.locator("header nav[aria-label='Sections']")
+    if (!(await headerNav.first().isVisible())) fail(viewport.name, "desktop section nav hidden")
   }
 
   const themeButtons = page.getByRole("button", { name: "Toggle theme" })
@@ -233,7 +285,7 @@ const seo = await seoPage.evaluate(() => {
     robots: meta('meta[name="robots"]'),
     manifest: document.querySelector('link[rel="manifest"]')?.getAttribute("href") ?? null,
     h1Count: document.querySelectorAll("h1").length,
-    articleCount: document.querySelectorAll("article").length,
+    sectionCount: document.querySelectorAll("section[id]").length,
     textLength: (document.body.innerText || document.body.textContent || "").length,
     jsonLd,
     lang: document.documentElement.lang,
@@ -248,7 +300,8 @@ if (!seo.twitterCard) fail("seo", "missing twitter:card")
 if (!seo.robots) fail("seo", "missing robots")
 if (!seo.manifest) fail("seo", "missing manifest")
 if (seo.lang !== "en") fail("seo", `bad lang: ${seo.lang}`)
-if (seo.articleCount < 10) fail("seo", `prerendered articles: ${seo.articleCount}`)
+if (seo.sectionCount < 8) fail("seo", `prerendered sections: ${seo.sectionCount}`)
+if (seo.textLength < 5000) fail("seo", `prerendered text too short: ${seo.textLength}`)
 if (seo.jsonLd.length !== 1) fail("seo", `json-ld blocks: ${seo.jsonLd.length}`)
 else {
   try {
