@@ -14,30 +14,28 @@ export function Section({ id, tinted, children }: SectionProps) {
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("scroll-mt-16 border-b py-14 sm:py-20", tinted && "bg-muted/40")}
+      className={cn(
+        "scroll-mt-16 border-t-4 border-ink py-14 sm:py-20",
+        tinted &&
+          "bg-[radial-gradient(color-mix(in_oklch,var(--ink)_18%,transparent)_1px,transparent_1px)] bg-[size:18px_18px]"
+      )}
     >
       <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
-        <header className="mb-9 max-w-3xl sm:mb-12">
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
-              {meta.index}
-            </span>
-            <span aria-hidden className="h-px w-8 bg-blue-700/40 dark:bg-blue-400/40" />
-            <span className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-              {meta.label}
-            </span>
+        <header className="mb-9 sm:mb-12">
+          <div className="inline-block -rotate-1">
+            <p className="mb-1 text-xs font-black tracking-[0.22em] text-muted-foreground uppercase">
+              {meta.kicker}
+            </p>
+            <h2
+              id={`${id}-title`}
+              className={cn(
+                "inline-block rounded-xl border-4 border-ink px-4 py-2 text-2xl text-ink shadow-[6px_6px_0_0_var(--ink)] sm:px-6 sm:py-2.5 sm:text-4xl",
+                meta.color
+              )}
+            >
+              {meta.title}
+            </h2>
           </div>
-
-          <h2
-            id={`${id}-title`}
-            className="mt-4 text-2xl font-semibold tracking-tight text-balance sm:text-3xl"
-          >
-            {meta.title}
-          </h2>
-
-          <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground sm:text-base">
-            {meta.description}
-          </p>
         </header>
 
         {children}

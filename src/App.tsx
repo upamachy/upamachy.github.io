@@ -1,15 +1,13 @@
 import { useMemo } from "react"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AboutSection } from "@/components/about-section"
-import { CertificationsSection } from "@/components/certifications-section"
 import { ContactSection } from "@/components/contact-section"
-import { EducationSection } from "@/components/education-section"
-import { ExperienceSection } from "@/components/experience-section"
 import { Hero } from "@/components/hero"
-import { ProjectsSection } from "@/components/projects-section"
+import { SchoolingSection } from "@/components/schooling-section"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { SkillsSection } from "@/components/skills-section"
+import { ToolboxSection } from "@/components/toolbox-section"
+import { WorkSection } from "@/components/work-section"
 import { sectionList } from "@/components/nav"
 import { ThemeProvider } from "@/components/theme-provider"
 import { useScrollSpy } from "@/lib/use-scroll-spy"
@@ -22,7 +20,7 @@ function Shell() {
     <div className="min-h-svh bg-background text-foreground">
       <a
         href="#about"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:border-2 focus:border-ink focus:bg-marigold focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink"
       >
         Skip to content
       </a>
@@ -32,11 +30,9 @@ function Shell() {
       <main>
         <Hero />
         <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <EducationSection />
-        <CertificationsSection />
+        <WorkSection />
+        <ToolboxSection />
+        <SchoolingSection />
         <ContactSection />
       </main>
 

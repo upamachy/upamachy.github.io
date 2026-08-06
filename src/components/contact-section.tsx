@@ -6,13 +6,21 @@ import { profile } from "@/data/profile"
 import { asset } from "@/lib/asset"
 
 const channels = [
-  { key: "email", label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+  {
+    key: "email",
+    label: "Email",
+    value: profile.email,
+    href: `mailto:${profile.email}`,
+    icon: Mail,
+    tint: "bg-marigold",
+  },
   {
     key: "phone",
     label: "Phone",
     value: profile.phone,
     href: `tel:${profile.phone.replace(/\s/g, "")}`,
     icon: Phone,
+    tint: "bg-teal",
   },
   {
     key: "github",
@@ -20,58 +28,75 @@ const channels = [
     value: `github.com/${profile.handle}`,
     href: profile.github,
     icon: GithubIcon,
+    tint: "bg-tomato",
   },
   {
     key: "linkedin",
     label: "LinkedIn",
-    value: "linkedin.com/in/upamachowdhury",
+    value: "in/upamachowdhury",
     href: profile.linkedin,
     icon: LinkedinIcon,
+    tint: "bg-sky",
   },
 ]
 
 export function ContactSection() {
   return (
     <Section id="contact">
-      <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+      <ul className="grid gap-4 sm:grid-cols-2">
         {channels.map((channel) => (
-          <div key={channel.key} className="border-t pt-5">
-            <dt className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase">
-              <channel.icon className="size-3.5" />
-              {channel.label}
-            </dt>
-            <dd className="mt-2 min-w-0">
-              <a
-                href={channel.href}
-                target={channel.href.startsWith("http") ? "_blank" : undefined}
-                rel={channel.href.startsWith("http") ? "noreferrer noopener" : undefined}
-                className="flex min-h-7 max-w-full items-center truncate text-[0.9375rem] font-medium hover:underline"
+          <li key={channel.key}>
+            <a
+              href={channel.href}
+              target={channel.href.startsWith("http") ? "_blank" : undefined}
+              rel={channel.href.startsWith("http") ? "noreferrer noopener" : undefined}
+              className="flex items-center gap-4 rounded-xl border-4 border-ink bg-card p-4 shadow-[6px_6px_0_0_var(--ink)] transition-transform hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none"
+            >
+              <span
+                className={`grid size-11 shrink-0 place-items-center rounded-lg border-2 border-ink text-ink ${channel.tint}`}
               >
-                {channel.value}
-              </a>
-            </dd>
-          </div>
+                <channel.icon className="size-5" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-xs font-black tracking-[0.14em] text-muted-foreground uppercase">
+                  {channel.label}
+                </span>
+                <span className="block truncate text-[0.9375rem] font-bold">{channel.value}</span>
+              </span>
+            </a>
+          </li>
         ))}
-      </dl>
+      </ul>
 
-      <div className="mt-12 flex flex-col gap-5 border-t pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-md text-base font-medium text-balance">{profile.headline}</p>
+      <div className="mt-8 flex flex-col items-start gap-5 rounded-2xl border-4 border-ink bg-card p-6 shadow-[8px_8px_0_0_var(--ink)] sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-heading text-2xl tracking-wide text-balance sm:text-3xl">
+            That's all, folks.
+          </p>
+          <p className="mt-1.5 text-sm font-bold text-muted-foreground">
+            Questions, a stubborn bug, or just hello — my inbox is open.
+          </p>
+        </div>
 
-        <div className="flex w-full flex-wrap gap-2.5 sm:w-auto">
-          <Button asChild size="lg" className="h-11 flex-1 px-5 text-base sm:flex-none">
+        <div className="flex w-full flex-wrap gap-3 sm:w-auto">
+          <Button
+            asChild
+            size="lg"
+            className="h-12 flex-1 border-2 border-ink bg-tomato px-5 text-base font-bold text-ink shadow-[5px_5px_0_0_var(--ink)] transition-transform hover:-translate-y-0.5 hover:bg-tomato active:translate-x-1 active:translate-y-1 active:shadow-none sm:flex-none"
+          >
             <a href={`mailto:${profile.email}`}>
-              <Mail className="size-4.5!" />
-              Send an email
+              <Mail className="size-5!" />
+              Email me
             </a>
           </Button>
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="h-11 flex-1 px-5 text-base sm:flex-none"
+            className="h-12 flex-1 border-2 border-ink bg-background px-5 text-base font-bold shadow-[5px_5px_0_0_var(--ink)] transition-transform hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none sm:flex-none"
           >
             <a href={asset(profile.cv)} download>
-              <Download className="size-4.5!" />
+              <Download className="size-5!" />
               Résumé
             </a>
           </Button>

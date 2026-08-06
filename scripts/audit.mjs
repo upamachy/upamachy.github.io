@@ -135,15 +135,7 @@ for (const viewport of viewports) {
   await page.keyboard.press("Enter")
   await page.waitForTimeout(200)
 
-  const SECTIONS = [
-    "about",
-    "experience",
-    "projects",
-    "skills",
-    "education",
-    "certifications",
-    "contact",
-  ]
+  const SECTIONS = ["about", "work", "toolbox", "schooling", "contact"]
 
   for (const id of SECTIONS) {
     const section = page.locator(`section#${id}`)
@@ -175,36 +167,30 @@ for (const viewport of viewports) {
   await page.evaluate(() => window.scrollTo(0, 0))
   await page.waitForTimeout(300)
 
-  const educationText = (await page.locator("section#education").innerText()).toLowerCase()
+  const schoolingText = (await page.locator('section#schooling').innerText()).toLowerCase()
   for (const expected of [
-    "higher secondary",
-    "secondary school certificate",
-    "4.17",
-    "5.00",
-    "co-curricular",
-    "edu computer club",
+    'higher secondary',
+    'secondary school certificate',
+    '4.17',
+    '5.00',
+    'edu computer club',
+    'anthropic',
   ]) {
-    if (!educationText.includes(expected)) {
-      fail(viewport.name, `education section missing "${expected}"`)
+    if (!schoolingText.includes(expected)) {
+      fail(viewport.name, 'schooling section missing ' + expected)
     }
   }
 
-  const activeNav = await page.evaluate(() => {
-    const element = document.getElementById("experience")
-    element?.scrollIntoView()
-    return true
-  })
-  if (activeNav) {
-    await page.waitForTimeout(400)
-    if (viewport.width >= 1024) {
-      const current = await page.locator('header nav a[aria-current="true"]').first().textContent()
-      if (current?.trim() !== "Experience") {
-        fail(viewport.name, `scroll spy showed "${current?.trim()}" instead of Experience`)
-      }
+  await page.evaluate(() => document.getElementById('work')?.scrollIntoView())
+  await page.waitForTimeout(450)
+  if (viewport.width >= 1024) {
+    const current = await page.locator('header nav a[aria-current="true"]').first().textContent()
+    if (current?.trim() !== 'Work') {
+      fail(viewport.name, 'scroll spy showed ' + current?.trim() + ' instead of Work')
     }
-    await page.evaluate(() => window.scrollTo(0, 0))
-    await page.waitForTimeout(300)
   }
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.waitForTimeout(300)
 
   if (viewport.width < 1024) {
     const menu = page.getByRole("button", { name: "Open menu" })
@@ -307,7 +293,7 @@ if (!seo.twitterCard) fail("seo", "missing twitter:card")
 if (!seo.robots) fail("seo", "missing robots")
 if (!seo.manifest) fail("seo", "missing manifest")
 if (seo.lang !== "en") fail("seo", `bad lang: ${seo.lang}`)
-if (seo.sectionCount < 8) fail("seo", `prerendered sections: ${seo.sectionCount}`)
+if (seo.sectionCount < 6) fail("seo", `prerendered sections: ${seo.sectionCount}`)
 if (seo.textLength < 5000) fail("seo", `prerendered text too short: ${seo.textLength}`)
 if (seo.jsonLd.length !== 1) fail("seo", `json-ld blocks: ${seo.jsonLd.length}`)
 else {

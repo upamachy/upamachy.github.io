@@ -3,11 +3,10 @@ export const profile = {
   name: "Upama Chowdhury",
   handle: "upamachy",
   role: ".NET Backend Engineer",
-  headline: "Available for backend and full-stack engineering roles.",
+  punchline: "I peck at backends until they behave.",
   tagline:
-    "Three years of production experience building ASP.NET Core services across healthcare, billing and program-monitoring platforms, with a current focus on event-driven, serverless systems on .NET 8 and AWS.",
+    "Three years building ASP.NET Core services for healthcare, billing and program-monitoring platforms. Lately: event-driven, serverless things on .NET 8 and AWS.",
   location: "Dhaka, Bangladesh",
-  availability: "Available for new opportunities",
   avatar: "upama.jpg",
   cv: "Upama-Chowdhury-CV.pdf",
   email: "upamachy360@gmail.com",
@@ -17,276 +16,217 @@ export const profile = {
 }
 
 export const stats = [
-  { value: "3+", label: "Years of experience" },
-  { value: "35k+", label: "Users served" },
-  { value: "5", label: "Products delivered" },
-  { value: "3.67", label: "CGPA out of 4.00" },
+  { value: "3", unit: "yrs", label: "in production" },
+  { value: "35k", unit: "+", label: "people on what I shipped" },
+  { value: "4", unit: "", label: "platforms delivered" },
 ]
 
 export const about = [
-  ".NET backend engineer based in Dhaka, Bangladesh, with three years of production experience across healthcare, billing and program-monitoring platforms. My work centres on service design: modelling the domain, enforcing data integrity, and keeping systems reliable when upstream inputs are inconsistent.",
-  "Recent work has focused on migrating synchronous integrations to event-driven pipelines on AWS, implementing standards-based claim exports, and resolving production defects with direct financial impact for clients.",
+  "Three years in production across healthcare claims, agency billing and government program monitoring — systems where a quiet bug costs somebody real money.",
 ]
 
-export type Experience = {
-  id: string
-  role: string
-  company: string
-  location: string
-  period: string
-  current?: boolean
-  highlights: string[]
-  tags: string[]
-}
-
-export const experience: Experience[] = [
-  {
-    id: "kaz",
-    role: "Associate Software Engineer",
-    company: "Kaz Software",
-    location: "Dhaka, Bangladesh",
-    period: "May 2025 — Present",
-    current: true,
-    highlights: [
-      "Core contributor to a multi-service .NET 8 and AWS Lambda platform on MongoDB serving 3,000–4,000 active users.",
-      "Diagnosed and resolved a production defect that was silently rejecting insurance claims, restoring billing for affected agencies.",
-      "Rebuilt HHAeXchange visit synchronization as an asynchronous, event-driven pipeline on AWS Step Functions.",
-      "Delivered an EDI 837P (ANSI X12) claim export, plus automated invoice generation and PDF finance exports, replacing manual spreadsheet billing.",
-    ],
-    tags: [".NET 8", "AWS Lambda", "Step Functions", "MongoDB", "EDI 837P"],
-  },
-  {
-    id: "coppanet",
-    role: "Software Engineer",
-    company: "Coppanet Ltd",
-    location: "Dhaka, Bangladesh",
-    period: "Nov 2023 — Apr 2025",
-    highlights: [
-      "Built the SoowGood administrative module end to end in ASP.NET Core and Angular, as an application separate from the patient-facing site.",
-      "Delivered authentication with ASP.NET Identity, appointment scheduling and video consultation on EF Core and SQL Server.",
-      "Led the team through final delivery of a platform serving 20,000+ registered users.",
-      "Sole developer responsible for modernizing FirstStudy, an inherited legacy system used by 10–12 institutes and 3,000+ students.",
-    ],
-    tags: ["ASP.NET Core", "Angular", "ASP.NET Identity", "EF Core", "SQL Server"],
-  },
-  {
-    id: "quad",
-    role: "Intern Software Engineer",
-    company: "Quad Theory Ltd",
-    location: "Dhaka, Bangladesh",
-    period: "Apr 2023 — Jul 2023",
-    highlights: [
-      "Built a demonstration ASP.NET Web API covering frontend, backend and database layers.",
-      "Implemented features across the frontend and backend of a live ASP.NET MVC and AngularJS product.",
-      "Worked with stored procedures and T-SQL on MS SQL Server, and wrote test cases for new functionality.",
-    ],
-    tags: ["ASP.NET Web API", "AngularJS", "React", "T-SQL"],
-  },
-]
-
-export type Project = {
+export type Bug = {
   id: string
   name: string
+  where: string
+  fix: string
+}
+
+export const bugs: Bug[] = [
+  {
+    id: "claims",
+    name: "Claims vanishing in silence",
+    where: "ExpertEVV · Kaz Software",
+    fix: "Insurance claims were being rejected with no error surfaced. Traced it, fixed it, billing unblocked for every affected agency.",
+  },
+  {
+    id: "sync",
+    name: "A sync that kept falling over",
+    where: "ExpertEVV · Kaz Software",
+    fix: "Rebuilt HHAeXchange visit syncing as an event-driven pipeline on AWS Step Functions instead of one fragile synchronous call.",
+  },
+  {
+    id: "export",
+    name: "One bad row killed the whole file",
+    where: "GNB MIS · Kaz Software",
+    fix: "Hardened the beneficiary Excel export so malformed records are skipped instead of failing the entire export.",
+  },
+  {
+    id: "duplicates",
+    name: "Reports counted twice",
+    where: "GNB MIS · Kaz Software",
+    fix: "Data-integrity defect in completion reporting: corrected report scoping and blocked duplicate submissions at the source.",
+  },
+  {
+    id: "spreadsheets",
+    name: "Billing done by hand",
+    where: "ExpertEVV · Kaz Software",
+    fix: "Automated invoice generation and PDF finance exports, retiring a manual spreadsheet process.",
+  },
+]
+
+export const traits = [
+  {
+    emoji: "🪵",
+    title: "I go after the hard knot",
+    body: "Found a defect that had been silently rejecting insurance claims and unblocked billing for every affected agency.",
+  },
+  {
+    emoji: "⚡",
+    title: "I like things asynchronous",
+    body: "Turned a fragile synchronous visit sync into an event-driven pipeline on AWS Step Functions.",
+  },
+  {
+    emoji: "🧱",
+    title: "I build so it does not break twice",
+    body: "Exports that skip one bad row instead of failing the whole file. Duplicate submissions blocked at the source.",
+  },
+]
+
+export type WorkProject = {
+  name: string
   kind: string
-  org: string
-  period: string
   blurb: string
   highlights: string[]
   tags: string[]
-  href?: string
-  hrefLabel?: string
 }
 
-export const projects: Project[] = [
-  {
-    id: "expertevv",
-    name: "ExpertEVV",
-    kind: "Electronic Visit Verification",
-    org: "Kaz Software",
-    period: "2025 — Present",
-    blurb:
-      "Multi-service .NET 8 platform on AWS that records home-care visits and converts them into payable insurance claims.",
-    highlights: [
-      "Event-driven visit synchronization on Step Functions, replacing an unreliable synchronous integration.",
-      "EDI 837P (ANSI X12) claim export with diagnosis coding and unit and charge calculation.",
-      "Automated invoicing and PDF finance exports for agency billing teams.",
-    ],
-    tags: [".NET 8", "AWS Lambda", "MongoDB", "Step Functions", "EventBridge"],
-  },
-  {
-    id: "gnb",
-    name: "GNB MIS",
-    kind: "Program-Monitoring API",
-    org: "Kaz Software",
-    period: "2025",
-    blurb:
-      ".NET 6 Clean Architecture API serving 10,000+ users across field reporting and beneficiary management.",
-    highlights: [
-      "Resolved a data-integrity defect in completion reporting through correct report scoping and duplicate-submission control.",
-      "Hardened the beneficiary Excel export to skip malformed records rather than fail the entire file.",
-      "Added permission-based JWT access control to sensitive reporting endpoints.",
-    ],
-    tags: [".NET 6", "Clean Architecture", "JWT", "SQL Server"],
-  },
-  {
-    id: "soowgood",
-    name: "SoowGood",
-    kind: "Telemedicine Platform",
-    org: "Coppanet Ltd",
-    period: "2023 — 2025",
-    blurb:
-      "Telemedicine platform serving 20,000+ registered users. Sole owner of the administrative application.",
-    highlights: [
-      "Built the administrative module end to end in ASP.NET Core and Angular as a standalone application.",
-      "Implemented authentication via ASP.NET Identity, appointment scheduling and video consultation on EF Core.",
-      "Led the team through final delivery and release.",
-    ],
-    tags: ["ASP.NET Core", "Angular", "Angular Material", "EF Core", "SQL Server"],
-  },
-  {
-    id: "firststudy",
-    name: "FirstStudy",
-    kind: "Coaching & Student Management",
-    org: "Coppanet Ltd",
-    period: "2024",
-    blurb:
-      "Inherited legacy system serving 10–12 institutes and 3,000+ students, modernized while remaining in production.",
-    highlights: [
-      "Refactored unstable modules incrementally, without downtime for live institutes.",
-      "Optimized EF Core and LINQ queries on the heaviest reporting paths.",
-      "Consolidated teacher, student and payment management into a single administrative interface.",
-    ],
-    tags: ["ASP.NET Core", "EF Core", "LINQ", "Refactoring"],
-  },
-  {
-    id: "thesis",
-    name: "Type-2 Diabetes Gene Detection",
-    kind: "Final-Year Thesis, Explainable AI",
-    org: "East Delta University",
-    period: "2023",
-    blurb:
-      "Machine learning research identifying genes associated with Type-2 diabetes, with interpretable model output.",
-    highlights: [
-      "Applied LIME to make model predictions interpretable rather than opaque.",
-      "Identified causative genes to support targeted, individualized treatment.",
-    ],
-    tags: ["Python", "Machine Learning", "LIME", "Explainable AI"],
-  },
-]
-
-export type Education = {
+export type Job = {
   id: string
-  degree: string
-  institution: string
-  location: string
-  period: string
-  grade: string
-  notes: string[]
-}
-
-export const education: Education[] = [
-  {
-    id: "bsc",
-    degree: "B.Sc. in Computer Science & Engineering",
-    institution: "East Delta University",
-    location: "Chattogram, Bangladesh",
-    period: "Graduated 2023",
-    grade: "CGPA 3.67 / 4.00",
-    notes: ["Final-year thesis on Type-2 diabetes gene detection using explainable AI."],
-  },
-  {
-    id: "hsc",
-    degree: "Higher Secondary School Certificate (HSC)",
-    institution: "CUET School and College",
-    location: "Chittagong, Bangladesh",
-    period: "2016 — 2018",
-    grade: "GPA 4.17 / 5.00",
-    notes: ["Science group."],
-  },
-  {
-    id: "ssc",
-    degree: "Secondary School Certificate (SSC)",
-    institution: "CUET School and College",
-    location: "Chittagong, Bangladesh",
-    period: "2015 — 2016",
-    grade: "CGPA 5.00 / 5.00",
-    notes: ["Science group."],
-  },
-]
-
-export type Activity = {
-  id: string
+  company: string
   role: string
-  organization: string
-  detail: string
+  period: string
+  location: string
+  current?: boolean
+  summary: string
+  projects: WorkProject[]
 }
 
-export const activities: Activity[] = [
+export const work: Job[] = [
   {
-    id: "edu-computer-club",
-    role: "Coordinator",
-    organization: "EDU Computer Club",
-    detail: "Coordinated club activities and technical events at East Delta University.",
+    id: "kaz",
+    company: "Kaz Software",
+    role: "Associate Software Engineer",
+    period: "May 2025 — Present",
+    location: "Dhaka",
+    current: true,
+    summary:
+      "Backend work on two products: a US home-care billing platform and a government program-monitoring API.",
+    projects: [
+      {
+        name: "ExpertEVV",
+        kind: "Electronic Visit Verification",
+        blurb:
+          "Multi-service .NET 8 platform on AWS that records home-care visits and turns them into payable insurance claims. Around 3,000–4,000 active users.",
+        highlights: [
+          "Diagnosed a production defect that was silently rejecting insurance claims, restoring billing for affected agencies.",
+          "Rebuilt HHAeXchange visit synchronization as an event-driven pipeline on AWS Step Functions.",
+          "Built the EDI 837P (ANSI X12) claim export, with diagnosis coding and unit and charge calculation.",
+          "Automated invoice generation and PDF finance exports, retiring a manual spreadsheet process.",
+        ],
+        tags: [".NET 8", "AWS Lambda", "Step Functions", "MongoDB", "EDI 837P"],
+      },
+      {
+        name: "GNB MIS",
+        kind: "Program-Monitoring API",
+        blurb:
+          ".NET 6 Clean Architecture API serving 10,000+ users across field reporting and beneficiary management.",
+        highlights: [
+          "Resolved a data-integrity defect in completion reporting through correct scoping and duplicate-submission control.",
+          "Hardened the beneficiary Excel export to skip malformed records rather than fail the whole file.",
+          "Added permission-based JWT access control to sensitive reporting endpoints.",
+        ],
+        tags: [".NET 6", "Clean Architecture", "JWT", "SQL Server"],
+      },
+    ],
+  },
+  {
+    id: "coppanet",
+    company: "Coppanet Ltd",
+    role: "Software Engineer",
+    period: "Nov 2023 — Apr 2025",
+    location: "Dhaka",
+    summary:
+      "Owned admin-side delivery on a telemedicine platform, then took sole ownership of a legacy education system.",
+    projects: [
+      {
+        name: "SoowGood",
+        kind: "Telemedicine Platform",
+        blurb:
+          "Telemedicine platform with 20,000+ registered users. I built and owned the entire administrative application.",
+        highlights: [
+          "Built the admin module end to end in ASP.NET Core and Angular, separate from the patient-facing site.",
+          "Implemented ASP.NET Identity authentication, appointment scheduling and video consultation on EF Core.",
+          "Led the team through final delivery and release.",
+        ],
+        tags: ["ASP.NET Core", "Angular", "ASP.NET Identity", "EF Core", "SQL Server"],
+      },
+      {
+        name: "FirstStudy",
+        kind: "Coaching & Student Management",
+        blurb:
+          "Inherited legacy system for 10–12 institutes and 3,000+ students. Sole developer, rebuilding it while it stayed live.",
+        highlights: [
+          "Refactored unstable modules incrementally, with no downtime for live institutes.",
+          "Optimized EF Core and LINQ queries on the heaviest reporting paths.",
+          "Consolidated teacher, student and payment management into one administrative interface.",
+        ],
+        tags: ["ASP.NET Core", "EF Core", "LINQ", "Refactoring"],
+      },
+    ],
+  },
+  {
+    id: "quad",
+    company: "Quad Theory Ltd",
+    role: "Intern Software Engineer",
+    period: "Apr 2023 — Jul 2023",
+    location: "Dhaka",
+    summary: "First taste of a production codebase, front and back.",
+    projects: [
+      {
+        name: "Internship",
+        kind: "ASP.NET MVC & Web API",
+        blurb: "Built a demonstration Web API end to end and shipped features into a live product.",
+        highlights: [
+          "Built a demonstration ASP.NET Web API covering frontend, backend and database layers.",
+          "Implemented features across a live ASP.NET MVC and AngularJS product.",
+          "Worked with stored procedures and T-SQL on MS SQL Server, and wrote test cases for new functionality.",
+        ],
+        tags: ["ASP.NET Web API", "AngularJS", "React", "T-SQL"],
+      },
+    ],
   },
 ]
 
-export const skillGroups: { label: string; blurb: string; items: string[] }[] = [
+export const research = {
+  title: "Type-2 Diabetes Gene Detection using Explainable AI",
+  context: "Final-year thesis · East Delta University · 2023",
+  blurb:
+    "Machine learning research identifying genes associated with Type-2 diabetes, with LIME applied so the model's reasoning is inspectable rather than opaque — the goal being targeted, individualized treatment.",
+  tags: ["Python", "Machine Learning", "LIME", "Explainable AI"],
+}
+
+export const skillGroups: { label: string; items: string[] }[] = [
   {
-    label: "Languages",
-    blurb: "Primary programming languages",
-    items: ["C#", "SQL", "TypeScript", "JavaScript", "Python"],
+    label: "Core .NET",
+    items: ["C#", "ASP.NET Core", ".NET 8", ".NET 6", "Web API", "MVC", "EF Core", "LINQ"],
   },
   {
-    label: "Backend",
-    blurb: "Frameworks and libraries",
-    items: [
-      "ASP.NET Core",
-      ".NET 8",
-      ".NET 6",
-      "Web API",
-      "MVC",
-      "EF Core",
-      "LINQ",
-      "ASP.NET Identity",
-      "REST",
-      "async/await",
-    ],
+    label: "AWS",
+    items: ["Lambda", "Step Functions", "EventBridge", "SQS", "API Gateway", "S3", "Cognito"],
+  },
+  { label: "Data", items: ["SQL Server", "MongoDB", "T-SQL", "Stored procedures"] },
+  {
+    label: "Beyond the backend",
+    items: ["Angular", "Angular Material", "React", "TypeScript", "Python"],
   },
   {
-    label: "Cloud & DevOps",
-    blurb: "Platforms and tooling",
-    items: [
-      "AWS Lambda",
-      "API Gateway",
-      "Step Functions",
-      "EventBridge",
-      "SQS",
-      "S3",
-      "Cognito",
-      "Git",
-      "GitHub",
-    ],
-  },
-  {
-    label: "Databases",
-    blurb: "Data stores and query languages",
-    items: ["SQL Server", "MongoDB", "T-SQL", "Stored procedures"],
-  },
-  {
-    label: "Frontend",
-    blurb: "Client-side frameworks",
-    items: ["Angular", "Angular Material", "React", "Bootstrap", "HTML", "CSS"],
-  },
-  {
-    label: "Practices",
-    blurb: "Architecture and methodology",
+    label: "How I build",
     items: [
       "Clean Architecture",
       "Microservices",
       "Event-driven",
-      "Serverless",
-      "Background jobs",
-      "JWT / Cognito auth",
+      "JWT & Cognito auth",
       "EDI 837P",
       "Automated testing",
     ],
@@ -299,11 +239,48 @@ export const topSkills = [
   "AWS Lambda",
   "MongoDB",
   "SQL Server",
-  "EF Core",
   "Step Functions",
-  "Angular",
-  "Clean Architecture",
   "EDI 837P",
+]
+
+export type Education = {
+  id: string
+  degree: string
+  institution: string
+  location: string
+  period: string
+  grade: string
+  note?: string
+}
+
+export const education: Education[] = [
+  {
+    id: "bsc",
+    degree: "B.Sc. in Computer Science & Engineering",
+    institution: "East Delta University",
+    location: "Chattogram",
+    period: "Graduated 2023",
+    grade: "CGPA 3.67 / 4.00",
+    note: "Coordinator, EDU Computer Club.",
+  },
+  {
+    id: "hsc",
+    degree: "Higher Secondary School Certificate",
+    institution: "CUET School and College",
+    location: "Chittagong",
+    period: "2016 — 2018",
+    grade: "GPA 4.17 / 5.00",
+    note: "Science group.",
+  },
+  {
+    id: "ssc",
+    degree: "Secondary School Certificate",
+    institution: "CUET School and College",
+    location: "Chittagong",
+    period: "2015 — 2016",
+    grade: "CGPA 5.00 / 5.00",
+    note: "Science group.",
+  },
 ]
 
 export type Certification = {
@@ -312,7 +289,6 @@ export type Certification = {
   issuer: string
   date: string
   credential: string | null
-  detail: string
   href?: string
   hrefLabel?: string
 }
@@ -324,7 +300,6 @@ export const certifications: Certification[] = [
     issuer: "Anthropic",
     date: "Oct 2025",
     credential: "tzm34p6gd8c5",
-    detail: "Framework for working effectively and responsibly with AI systems.",
   },
   {
     id: "cert-pencilbox",
@@ -332,9 +307,8 @@ export const certifications: Certification[] = [
     issuer: "PencilBox Training Institute",
     date: "Mar 2022",
     credential: "ASPMVC/008/012",
-    detail: "96-hour training programme completed October to December 2021. Awarded the Excellence Award.",
     href: "cert-pencilbox.jpg",
-    hrefLabel: "View certificate",
+    hrefLabel: "See it",
   },
   {
     id: "cert-devskill",
@@ -342,6 +316,5 @@ export const certifications: Certification[] = [
     issuer: "Dev Skill",
     date: "Jun 2021",
     credential: null,
-    detail: "Professional training in C# fundamentals and object-oriented programming.",
   },
 ]

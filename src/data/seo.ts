@@ -1,4 +1,4 @@
-import { certifications, education, profile, projects, skillGroups } from "@/data/profile"
+import { certifications, education, profile, research, work } from "@/data/profile"
 
 export const site = {
   url: "https://upamachy.github.io",
@@ -10,7 +10,8 @@ export const site = {
   themeColor: "#0a0a0a",
 }
 
-const knowsAbout = skillGroups.flatMap((group) => group.items)
+const projects = work.flatMap((job) => job.projects)
+const knowsAbout = projects.flatMap((project) => project.tags)
 
 export function structuredData() {
   const person = {
@@ -95,13 +96,22 @@ export function structuredData() {
     mainEntity: { "@id": `${site.url}/#person` },
     primaryImageOfPage: `${site.url}/og.png`,
     inLanguage: "en",
-    hasPart: projects.map((project) => ({
-      "@type": "CreativeWork",
-      name: `${project.name} — ${project.kind}`,
-      description: project.blurb,
-      author: { "@id": `${site.url}/#person` },
-      keywords: project.tags.join(", "),
-    })),
+    hasPart: [
+      ...projects.map((project) => ({
+        "@type": "CreativeWork",
+        name: `${project.name} — ${project.kind}`,
+        description: project.blurb,
+        author: { "@id": `${site.url}/#person` },
+        keywords: project.tags.join(", "),
+      })),
+      {
+        "@type": "ScholarlyArticle",
+        name: research.title,
+        description: research.blurb,
+        author: { "@id": `${site.url}/#person` },
+        keywords: research.tags.join(", "),
+      },
+    ],
   }
 
   const breadcrumbs = {
@@ -109,17 +119,10 @@ export function structuredData() {
     "@id": `${site.url}/#breadcrumbs`,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "About", item: `${site.url}/#about` },
-      { "@type": "ListItem", position: 2, name: "Experience", item: `${site.url}/#experience` },
-      { "@type": "ListItem", position: 3, name: "Projects", item: `${site.url}/#projects` },
-      { "@type": "ListItem", position: 4, name: "Skills", item: `${site.url}/#skills` },
-      { "@type": "ListItem", position: 5, name: "Education", item: `${site.url}/#education` },
-      {
-        "@type": "ListItem",
-        position: 6,
-        name: "Certifications",
-        item: `${site.url}/#certifications`,
-      },
-      { "@type": "ListItem", position: 7, name: "Contact", item: `${site.url}/#contact` },
+      { "@type": "ListItem", position: 2, name: "Work", item: `${site.url}/#work` },
+      { "@type": "ListItem", position: 3, name: "Toolbox", item: `${site.url}/#toolbox` },
+      { "@type": "ListItem", position: 4, name: "Schooling", item: `${site.url}/#schooling` },
+      { "@type": "ListItem", position: 5, name: "Contact", item: `${site.url}/#contact` },
     ],
   }
 
