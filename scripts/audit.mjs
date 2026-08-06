@@ -51,8 +51,11 @@ for (const viewport of viewports) {
     if (response.status() >= 400) failedRequests.push(`${response.status()} ${response.url()}`)
   })
 
-  await page.goto(baseUrl, { waitUntil: "networkidle" })
-  await page.waitForTimeout(600)
+  await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 90000 })
+  await page
+    .waitForLoadState("networkidle", { timeout: 60000 })
+    .catch(() => page.waitForLoadState("load", { timeout: 60000 }))
+  await page.waitForTimeout(800)
 
   const overflow = await page.evaluate(() => {
     const docWidth = document.documentElement.clientWidth
@@ -263,7 +266,7 @@ for (const viewport of viewports) {
 
 const seoContext = await browser.newContext({ javaScriptEnabled: false })
 const seoPage = await seoContext.newPage()
-await seoPage.goto(baseUrl, { waitUntil: "domcontentloaded" })
+await seoPage.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 90000 })
 const seo = await seoPage.evaluate(() => {
   const meta = (selector) => document.querySelector(selector)?.getAttribute("content") ?? null
   const jsonLd = Array.from(document.querySelectorAll('script[type="application/ld+json"]')).map(
